@@ -7,8 +7,12 @@ function addTask() {
   const li = document.createElement("li");
   li.textContent = taskText;
 
-  document.getElementById("taskList").appendChild(li);
+  // TAMAMLANDI ÖZELLİĞİ
+  li.addEventListener("click", function () {
+    li.classList.toggle("completed");
+  });
 
-  taskInput.value = ""; // inputu temizle
+  document.getElementById("taskList").appendChild(li);
+  taskInput.value = "";
 }
 
