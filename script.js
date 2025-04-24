@@ -22,6 +22,13 @@ function addTask() {
     e.stopPropagation(); // li'ye tıklama olayını engelle
     li.remove();
   });
+  // Enter tuşu ile görev ekleme
+document.getElementById("taskInput").addEventListener("keypress", function(e) {
+  if (e.key === "Enter") {
+    addTask();
+  }
+});
+
 
   li.appendChild(deleteBtn);
   document.getElementById("taskList").appendChild(li);
