@@ -1,13 +1,17 @@
 /* Genel sayfa stili */
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to right, #fce4ec, #fff9c4); /* pembe → sarı */
+  background: linear-gradient(to right, #fce4ec, #fff9c4);
+  background-size: 400% 400%;
+  animation: gradientGlow 10s ease infinite;
+  background-attachment: fixed;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   padding-top: 50px;
   min-height: 100vh;
 }
+
 /* Parıltı animasyonu */
 @keyframes gradientGlow {
   0% {
@@ -78,13 +82,14 @@ ul {
 }
 
 li {
-  background-color: rgba(255, 255, 255, 0.6); /* Daha şeffaf */
+  background-color: rgba(255, 255, 255, 0.3); /* daha şeffaf */
   border-left: 4px solid #f48fb1;
   border-radius: 16px;
-  padding: 10px 14px;
+  padding: 12px 16px;
   margin-bottom: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-  backdrop-filter: blur(6px); /* Cam efekti */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* Safari için */
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
