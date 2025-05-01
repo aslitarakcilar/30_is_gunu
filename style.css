@@ -101,3 +101,10 @@ li:hover {
   transform: scale(1.2);
   color: darkred;
 }
+.date {
+  display: block;
+  font-size: 12px;
+  color: #888;
+  margin-top: 4px;
+}
+
