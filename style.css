@@ -95,8 +95,10 @@ li {
 
 /* Görev hover efekti */
 li:hover {
-  background-color: #e0f7fa; /* açık mavi */
+  background-color: #fdf6f0;
   transform: scale(1.02);
+}
+
 }
 
 /* Tamamlanan görev */
