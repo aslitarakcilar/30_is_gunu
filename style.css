@@ -78,18 +78,20 @@ ul {
 }
 
 li {
- display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  background-color: rgba(255, 255, 255, 0.85);
-  border-left: 4px solid #f48fb1; /* pastel pembe */
+  background-color: rgba(255, 255, 255, 0.6); /* Daha şeffaf */
+  border-left: 4px solid #f48fb1;
   border-radius: 16px;
   padding: 10px 14px;
-  margin-bottom: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  margin-bottom: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(6px); /* Cam efekti */
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
   transition: all 0.3s ease;
-  backdrop-filter: blur(4px);
 }
+
 
 
 /* Görev hover efekti */
