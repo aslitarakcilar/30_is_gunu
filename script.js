@@ -99,4 +99,21 @@ document.getElementById("taskInput").addEventListener("keypress", function (e) {
   if (e.key === "Enter") {
     addTask();
   }
+  function filterTasks(type) {
+  const tasks = document.querySelectorAll("#taskList li");
+  tasks.forEach((task) => {
+    const isCompleted = task.classList.contains("completed");
+
+    if (type === "all") {
+      task.style.display = "flex";
+    } else if (type === "completed" && isCompleted) {
+      task.style.display = "flex";
+    } else if (type === "incomplete" && !isCompleted) {
+      task.style.display = "flex";
+    } else {
+      task.style.display = "none";
+    }
+  });
+}
+
 });
