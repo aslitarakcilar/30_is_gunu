@@ -10,21 +10,24 @@
 <body>
   <div class="app">
     <h1>📝 To-Do List</h1>
+
+    <!-- Görev ekleme alanı -->
     <div class="input-group">
       <input type="text" id="taskInput" placeholder="Yeni görev girin..." />
       <button onclick="addTask()">Ekle</button>
     </div>
 
-    <!-- 🔍 Filtre butonları -->
+    <!-- Filtreleme butonları -->
     <div class="filters">
       <button onclick="filterTasks('all')">Hepsi</button>
       <button onclick="filterTasks('completed')">Tamamlananlar</button>
       <button onclick="filterTasks('incomplete')">Yapılmayanlar</button>
     </div>
 
-    <!-- 📊 Görev sayacı -->
+    <!-- İstatistik -->
     <p id="task-stats">✔️ Tamamlanan: 0 / Toplam: 0</p>
 
+    <!-- Görev listesi -->
     <ul id="taskList"></ul>
   </div>
 
