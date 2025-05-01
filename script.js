@@ -115,5 +115,13 @@ document.getElementById("taskInput").addEventListener("keypress", function (e) {
     }
   });
 }
+  function updateStats() {
+  const total = document.querySelectorAll("#taskList li").length;
+  const completed = document.querySelectorAll("#taskList li.completed").length;
+
+  const statsText = `✔️ Tamamlanan: ${completed} / Toplam: ${total}`;
+  document.getElementById("task-stats").textContent = statsText;
+}
+
 
 });
