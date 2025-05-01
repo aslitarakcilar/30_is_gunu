@@ -24,6 +24,11 @@ function addTask() {
 function createTaskElement(text, completed, dateText = null) {
   const li = document.createElement("li");
 
+  // Sol taraf: görev metni ve tarih için kapsayıcı
+  const contentWrapper = document.createElement("div");
+  contentWrapper.style.display = "flex";
+  contentWrapper.style.flexDirection = "column";
+
   // Görev metni
   const taskSpan = document.createElement("span");
   taskSpan.textContent = text;
@@ -43,16 +48,11 @@ function createTaskElement(text, completed, dateText = null) {
     });
   }
 
-  // Tamamlandıysa class ekle
-  if (completed) li.classList.add("completed");
+  // Sol kapsayıcıya ekle
+  contentWrapper.appendChild(taskSpan);
+  contentWrapper.appendChild(dateSpan);
 
-  // Tıklanırsa tamamlandı olarak işaretle
-  li.addEventListener("click", function () {
-    li.classList.toggle("completed");
-    saveTasks();
-  });
-
-  // Silme butonu
+  // Silme butonu (sağ taraf)
   const deleteBtn = document.createElement("span");
   deleteBtn.innerHTML = "🗑";
   deleteBtn.classList.add("delete-btn");
@@ -63,9 +63,17 @@ function createTaskElement(text, completed, dateText = null) {
     saveTasks();
   });
 
-  // HTML yapısına yerleştir
-  li.appendChild(taskSpan);
-  li.appendChild(dateSpan);
+  // Tamamlandıysa class ekle
+  if (completed) li.classList.add("completed");
+
+  // Tıklanırsa tamamlandı olarak işaretle
+  li.addEventListener("click", function () {
+    li.classList.toggle("completed");
+    saveTasks();
+  });
+
+  // HTML yapısına yerleştir: solda içerik, sağda silme butonu
+  li.appendChild(contentWrapper);
   li.appendChild(deleteBtn);
   document.getElementById("taskList").appendChild(li);
 }
