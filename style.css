@@ -1,13 +1,26 @@
 /* Genel sayfa stili */
 body {
   font-family: 'Segoe UI', sans-serif;
-  background-color: #f2f2f2;
+  background: linear-gradient(to right, #fce4ec, #fff9c4); /* pembe → sarı */
   display: flex;
   justify-content: center;
   align-items: flex-start;
   padding-top: 50px;
   min-height: 100vh;
 }
+/* Parıltı animasyonu */
+@keyframes gradientGlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+    border: 1px solid #ddd;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
 
 /* Uygulama kutusu */
 .app {
@@ -25,6 +38,9 @@ body {
   font-size: 24px;
   text-align: center;
   color: #333;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: #4CAF50;
 }
 
 /* Input ve buton */
@@ -107,4 +123,10 @@ li:hover {
   color: #888;
   margin-top: 4px;
 }
+li {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
 
