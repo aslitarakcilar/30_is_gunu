@@ -12,7 +12,7 @@ body {
   min-height: 100vh;
 }
 
-/* Animasyon */
+/* Arka plan animasyonu */
 @keyframes gradientGlow {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -43,10 +43,10 @@ body {
 .input-group {
   display: flex;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
-input[type="text"] {
+input[type="text"], input[type="date"] {
   flex: 1;
   padding: 10px;
   font-size: 16px;
@@ -54,6 +54,7 @@ input[type="text"] {
   border-radius: 8px;
 }
 
+/* Ekleme ve filtre butonları */
 button {
   padding: 10px 16px;
   font-size: 16px;
@@ -97,7 +98,27 @@ button:hover {
   text-align: center;
   font-size: 14px;
   color: #333;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+}
+
+/* Arama çubuğu */
+#search-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* Sıralama seçici */
+#sort-select {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 10px;
 }
 
 /* Görev listesi */
@@ -134,6 +155,11 @@ li:hover {
   color: gray;
   opacity: 0.7;
   border-left-color: #999;
+}
+
+/* Görev metni ve tarihi birlikte */
+.task-content {
+  flex: 1;
 }
 
 /* Tarih */
