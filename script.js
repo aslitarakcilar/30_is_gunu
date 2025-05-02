@@ -1,11 +1,9 @@
 // Sayfa yüklendiğinde görevleri yükle
 window.onload = function () {
   const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
   storedTasks.forEach((task) => {
     createTaskElement(task.text, task.completed, task.date);
   });
-
   updateStats();
 };
 
@@ -26,14 +24,16 @@ function addTask() {
 function createTaskElement(text, completed, dateText = null) {
   const li = document.createElement("li");
 
-  // Sol taraf: görev metni + tarih
+  // Görev içeriği sarmalayıcısı
   const contentWrapper = document.createElement("div");
   contentWrapper.style.display = "flex";
   contentWrapper.style.flexDirection = "column";
 
+  // Görev metni
   const taskSpan = document.createElement("span");
   taskSpan.textContent = text;
 
+  // Görev tarihi
   const dateSpan = document.createElement("small");
   dateSpan.classList.add("date");
 
@@ -48,6 +48,7 @@ function createTaskElement(text, completed, dateText = null) {
     });
   }
 
+  // Görev içeriğini sarmalayıcıya ekle
   contentWrapper.appendChild(taskSpan);
   contentWrapper.appendChild(dateSpan);
 
@@ -56,27 +57,29 @@ function createTaskElement(text, completed, dateText = null) {
   deleteBtn.innerHTML = "🗑";
   deleteBtn.classList.add("delete-btn");
   deleteBtn.addEventListener("click", function (e) {
-    e.stopPropagation();
+    e.stopPropagation(); // li tıklamasını tetiklemesin
     li.remove();
     saveTasks();
   });
 
-  // Tamamlandı kontrolü
+  // Görev tamamlandıysa stilini uygula
   if (completed) li.classList.add("completed");
 
+  // Tamamlandı durumunu değiştirme
   li.addEventListener("click", function () {
     li.classList.toggle("completed");
     saveTasks();
   });
 
+  // Görev elemanlarını birleştir
   li.appendChild(contentWrapper);
   li.appendChild(deleteBtn);
   document.getElementById("taskList").appendChild(li);
 
-  updateStats(); // yeni görev eklendiğinde istatistik güncelle
+  updateStats(); // görev eklenince istatistik güncelle
 }
 
-// localStorage'a kaydet
+// Görevleri localStorage’a kaydet
 function saveTasks() {
   const tasks = [];
   document.querySelectorAll("#taskList li").forEach((li) => {
@@ -100,7 +103,7 @@ document.getElementById("taskInput").addEventListener("keypress", function (e) {
   }
 });
 
-// 📊 Görev istatistiklerini güncelle
+// Görev istatistiklerini güncelle (tamamlanan / toplam)
 function updateStats() {
   const total = document.querySelectorAll("#taskList li").length;
   const completed = document.querySelectorAll("#taskList li.completed").length;
@@ -111,9 +114,10 @@ function updateStats() {
   }
 }
 
-// 🔍 Filtreleme fonksiyonu
+// Filtreleme fonksiyonu
 function filterTasks(type) {
   const tasks = document.querySelectorAll("#taskList li");
+
   tasks.forEach((task) => {
     const isCompleted = task.classList.contains("completed");
 
