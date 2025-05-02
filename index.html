@@ -2,33 +2,27 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mini To-Do App</title>
-  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <div class="app">
-    <h1>📝 To-Do List</h1>
+  <div class="container">
+    <h1>Görev Listesi</h1>
+    
+    <input type="text" id="taskInput" placeholder="Yeni görev ekle..." />
+    <button onclick="addTask()">Ekle</button>
 
-    <!-- Görev ekleme alanı -->
-    <div class="input-group">
-      <input type="text" id="taskInput" placeholder="Yeni görev girin..." />
-      <button onclick="addTask()">Ekle</button>
-    </div>
+    <input type="text" id="searchInput" placeholder="Görev ara..." />
 
-    <!-- Filtreleme butonları -->
-    <div class="filters">
-      <button onclick="filterTasks('all')">Hepsi</button>
-      <button onclick="filterTasks('completed')">Tamamlananlar</button>
-      <button onclick="filterTasks('incomplete')">Yapılmayanlar</button>
-    </div>
-
-    <!-- İstatistik -->
-    <p id="task-stats">✔️ Tamamlanan: 0 / Toplam: 0</p>
-
-    <!-- Görev listesi -->
     <ul id="taskList"></ul>
+
+    <div class="stats">
+      <p>Tamamlanan görev sayısı: <span id="completedCount">0</span></p>
+    </div>
+
+    <canvas id="taskChart" width="400" height="200"></canvas>
   </div>
 
   <script src="script.js"></script>
