@@ -67,9 +67,11 @@ function createTaskElement(text, completed, dateText = null) {
 
   // Tamamlandı durumunu değiştirme
   li.addEventListener("click", function () {
-    li.classList.toggle("completed");
-    saveTasks();
-  });
+  li.classList.toggle("completed");
+  saveTasks();
+  updateStats(); // 👈 Burası eksikse tamamlanan sayısı güncellenmez
+});
+
 
   // Görev elemanlarını birleştir
   li.appendChild(contentWrapper);
