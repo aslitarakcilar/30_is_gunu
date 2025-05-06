@@ -181,3 +181,14 @@ li:hover {
   transform: scale(1.2);
   color: darkred;
 }
+
+/* Görev eklenince animasyon efekti */
+.task-enter {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.3s ease;
+}
+.task-enter-active {
+  opacity: 1;
+  transform: scale(1);
+}
