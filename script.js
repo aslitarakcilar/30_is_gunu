@@ -5,6 +5,7 @@ window.onload = function () {
     createTaskElement(task.text, task.completed, task.date);
   });
   updateStats();
+  updateChart(); // 📊 Sayfa açıldığında grafik güncelle
 };
 
 // Görev ekleme
@@ -24,16 +25,24 @@ function addTask() {
 function createTaskElement(text, completed, dateText = null) {
   const li = document.createElement("li");
 
+  // Animasyon ekle
+  li.classList.add("task-enter");
+  setTimeout(() => {
+    li.classList.add("task-enter-active");
+  }, 10);
+  setTimeout(() => {
+    li.classList.remove("task-enter");
+    li.classList.remove("task-enter-active");
+  }, 300);
+
   // Görev içeriği sarmalayıcısı
   const contentWrapper = document.createElement("div");
   contentWrapper.style.display = "flex";
   contentWrapper.style.flexDirection = "column";
 
-  // Görev metni
   const taskSpan = document.createElement("span");
   taskSpan.textContent = text;
 
-  // Görev tarihi
   const dateSpan = document.createElement("small");
   dateSpan.classList.add("date");
 
@@ -48,7 +57,6 @@ function createTaskElement(text, completed, dateText = null) {
     });
   }
 
-  // Görev içeriğini sarmalayıcıya ekle
   contentWrapper.appendChild(taskSpan);
   contentWrapper.appendChild(dateSpan);
 
@@ -57,28 +65,26 @@ function createTaskElement(text, completed, dateText = null) {
   deleteBtn.innerHTML = "🗑";
   deleteBtn.classList.add("delete-btn");
   deleteBtn.addEventListener("click", function (e) {
-    e.stopPropagation(); // li tıklamasını tetiklemesin
+    e.stopPropagation(); // li'ye tıklanmasını engelle
     li.remove();
     saveTasks();
   });
 
-  // Görev tamamlandıysa stilini uygula
   if (completed) li.classList.add("completed");
 
-  // Tamamlandı durumunu değiştirme
   li.addEventListener("click", function () {
-  li.classList.toggle("completed");
-  saveTasks();
-  updateStats(); // 👈 Burası eksikse tamamlanan sayısı güncellenmez
-});
+    li.classList.toggle("completed");
+    saveTasks();
+    updateStats();
+    updateChart(); // ✅ Görev tamamlandığında grafik güncelle
+  });
 
-
-  // Görev elemanlarını birleştir
   li.appendChild(contentWrapper);
   li.appendChild(deleteBtn);
   document.getElementById("taskList").appendChild(li);
 
-  updateStats(); // görev eklenince istatistik güncelle
+  updateStats();
+  updateChart(); // ✅ Yeni görev eklendiğinde grafik güncelle
 }
 
 // Görevleri localStorage’a kaydet
@@ -95,7 +101,8 @@ function saveTasks() {
   });
 
   localStorage.setItem("tasks", JSON.stringify(tasks));
-  updateStats(); // her kayıttan sonra istatistik güncelle
+  updateStats();
+  updateChart(); // ✅ Kaydettikten sonra grafik güncelle
 }
 
 // Enter tuşu ile görev ekleme
@@ -114,15 +121,52 @@ function updateStats() {
   if (stats) {
     stats.textContent = `✔️ Tamamlanan: ${completed} / Toplam: ${total}`;
   }
+
+  // ayrıca tamamlanan sayısını ayrı ID'den gösteriyorsan:
+  const completedSpan = document.getElementById("completedCount");
+  if (completedSpan) {
+    completedSpan.textContent = completed;
+  }
 }
 
-// Filtreleme fonksiyonu
+// 📊 Chart.js ile görev grafiğini güncelle
+function updateChart() {
+  const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  const completed = tasks.filter(t => t.completed).length;
+  const uncompleted = tasks.length - completed;
+
+  const ctx = document.getElementById("taskChart").getContext("2d");
+  if (window.taskChartInstance) {
+    window.taskChartInstance.destroy(); // Eski grafik varsa sil
+  }
+
+  window.taskChartInstance = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: ["Tamamlanan", "Kalan"],
+      datasets: [{
+        label: "Görev Sayısı",
+        data: [completed, uncompleted],
+        backgroundColor: ["#66bb6a", "#ef5350"]
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false }
+      },
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+}
+
+// 🔍 Filtreleme fonksiyonu (isteğe bağlı)
 function filterTasks(type) {
   const tasks = document.querySelectorAll("#taskList li");
-
   tasks.forEach((task) => {
     const isCompleted = task.classList.contains("completed");
-
     if (type === "all") {
       task.style.display = "flex";
     } else if (type === "completed" && isCompleted) {
