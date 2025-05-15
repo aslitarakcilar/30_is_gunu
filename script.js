@@ -5,18 +5,21 @@ window.onload = function () {
     createTaskElement(task.text, task.completed, task.date);
   });
   updateStats();
-  updateChart(); // 📊 Sayfa açıldığında grafik güncelle
+  updateChart();
 };
 
 // Görev ekleme
 function addTask() {
   const taskInput = document.getElementById("taskInput");
   const taskText = taskInput.value.trim();
+  const priority = document.getElementById("prioritySelect").value; // 🆕 öncelik al
 
   if (taskText === "") return;
 
-  createTaskElement(taskText, false);
+  const taskWithPriority = `${priority} ${taskText}`; // 🆕 önceliği metne ekle
+  createTaskElement(taskWithPriority, false);
   taskInput.value = "";
+  document.getElementById("prioritySelect").value = "🟢"; // default’a geri döndür
 
   saveTasks();
 }
@@ -25,17 +28,14 @@ function addTask() {
 function createTaskElement(text, completed, dateText = null) {
   const li = document.createElement("li");
 
-  // Animasyon ekle
+  // Animasyon
   li.classList.add("task-enter");
-  setTimeout(() => {
-    li.classList.add("task-enter-active");
-  }, 10);
+  setTimeout(() => li.classList.add("task-enter-active"), 10);
   setTimeout(() => {
     li.classList.remove("task-enter");
     li.classList.remove("task-enter-active");
   }, 300);
 
-  // Görev içeriği sarmalayıcısı
   const contentWrapper = document.createElement("div");
   contentWrapper.style.display = "flex";
   contentWrapper.style.flexDirection = "column";
@@ -60,12 +60,11 @@ function createTaskElement(text, completed, dateText = null) {
   contentWrapper.appendChild(taskSpan);
   contentWrapper.appendChild(dateSpan);
 
-  // Silme butonu
   const deleteBtn = document.createElement("span");
   deleteBtn.innerHTML = "🗑";
   deleteBtn.classList.add("delete-btn");
   deleteBtn.addEventListener("click", function (e) {
-    e.stopPropagation(); // li'ye tıklanmasını engelle
+    e.stopPropagation();
     li.remove();
     saveTasks();
   });
@@ -76,7 +75,7 @@ function createTaskElement(text, completed, dateText = null) {
     li.classList.toggle("completed");
     saveTasks();
     updateStats();
-    updateChart(); // ✅ Görev tamamlandığında grafik güncelle
+    updateChart();
   });
 
   li.appendChild(contentWrapper);
@@ -84,7 +83,7 @@ function createTaskElement(text, completed, dateText = null) {
   document.getElementById("taskList").appendChild(li);
 
   updateStats();
-  updateChart(); // ✅ Yeni görev eklendiğinde grafik güncelle
+  updateChart();
 }
 
 // Görevleri localStorage’a kaydet
@@ -102,7 +101,7 @@ function saveTasks() {
 
   localStorage.setItem("tasks", JSON.stringify(tasks));
   updateStats();
-  updateChart(); // ✅ Kaydettikten sonra grafik güncelle
+  updateChart();
 }
 
 // Enter tuşu ile görev ekleme
@@ -112,24 +111,23 @@ document.getElementById("taskInput").addEventListener("keypress", function (e) {
   }
 });
 
-// Görev istatistiklerini güncelle (tamamlanan / toplam)
+// Görev istatistiklerini güncelle
 function updateStats() {
   const total = document.querySelectorAll("#taskList li").length;
   const completed = document.querySelectorAll("#taskList li.completed").length;
-  const stats = document.getElementById("task-stats");
 
+  const stats = document.getElementById("task-stats");
   if (stats) {
     stats.textContent = `✔️ Tamamlanan: ${completed} / Toplam: ${total}`;
   }
 
-  // ayrıca tamamlanan sayısını ayrı ID'den gösteriyorsan:
   const completedSpan = document.getElementById("completedCount");
   if (completedSpan) {
     completedSpan.textContent = completed;
   }
 }
 
-// 📊 Chart.js ile görev grafiğini güncelle
+// Chart.js ile görev grafiğini güncelle
 function updateChart() {
   const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
   const completed = tasks.filter(t => t.completed).length;
@@ -137,7 +135,7 @@ function updateChart() {
 
   const ctx = document.getElementById("taskChart").getContext("2d");
   if (window.taskChartInstance) {
-    window.taskChartInstance.destroy(); // Eski grafik varsa sil
+    window.taskChartInstance.destroy();
   }
 
   window.taskChartInstance = new Chart(ctx, {
@@ -162,7 +160,7 @@ function updateChart() {
   });
 }
 
-// 🔍 Filtreleme fonksiyonu (isteğe bağlı)
+// Filtreleme fonksiyonu
 function filterTasks(type) {
   const tasks = document.querySelectorAll("#taskList li");
   tasks.forEach((task) => {
