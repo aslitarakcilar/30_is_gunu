@@ -11,17 +11,29 @@
   <div class="container">
     <h1>Görev Listesi</h1>
     
-    <input type="text" id="taskInput" placeholder="Yeni görev ekle..." />
-    <button onclick="addTask()">Ekle</button>
+    <!-- Görev giriş alanı ve öncelik seçici -->
+    <div class="input-group">
+      <input type="text" id="taskInput" placeholder="Yeni görev ekle..." />
+      <select id="prioritySelect">
+        <option value="🟢">Düşük</option>
+        <option value="🟡">Orta</option>
+        <option value="🔴">Yüksek</option>
+      </select>
+      <button onclick="addTask()">Ekle</button>
+    </div>
 
+    <!-- Arama çubuğu -->
     <input type="text" id="searchInput" placeholder="Görev ara..." />
 
+    <!-- Görev listesi -->
     <ul id="taskList"></ul>
 
+    <!-- Tamamlanan görev sayısı -->
     <div class="stats">
       <p>Tamamlanan görev sayısı: <span id="completedCount">0</span></p>
     </div>
 
+    <!-- Grafik alanı -->
     <canvas id="taskChart" width="400" height="200"></canvas>
   </div>
 
