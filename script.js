@@ -57,6 +57,7 @@ function createTaskElement(text, completed, dateText = null) {
     });
   }
 
+  
   contentWrapper.appendChild(taskSpan);
   contentWrapper.appendChild(dateSpan);
 
